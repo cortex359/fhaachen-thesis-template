@@ -1,0 +1,79 @@
+\chapter{Introduction}\label{introduction}
+
+\section{Motivation and Context}
+
+% Describe the motivation for your work and provide context.
+
+You can cite references like \cite{thelenAIxcellentVibesGermEval2025}.
+
+\section{Research Questions}
+
+% State the research questions or hypotheses your thesis addresses.
+
+% =============================================================================
+% EXAMPLE: PGF figure (exported from matplotlib)
+% =============================================================================
+% To export a matplotlib figure as PGF for LaTeX-native rendering:
+%
+%   import matplotlib
+%   matplotlib.use('pgf')       # set backend BEFORE importing pyplot
+%   import matplotlib.pyplot as plt
+%
+%   fig, ax = plt.subplots(figsize=(4, 3))   # size in inches
+%   ax.plot([1, 2, 3, 4], [1, 4, 2, 3])
+%   ax.set_xlabel('X Axis')
+%   ax.set_ylabel('Y Axis')
+%   fig.savefig('plots/example_plot.pgf')
+%
+% PGF figures use the document's fonts and scale perfectly in the PDF.
+
+\begin{figure}[ht]
+    \centering
+    \resizebox{0.8\textwidth}{!}{\import{plots}{example_plot.pgf}}
+    \caption{An example PGF figure exported from matplotlib. PGF figures use
+             the document's fonts and render as vector graphics.}
+    \label{fig:pgf_example}
+\end{figure}
+
+
+% =============================================================================
+% EXAMPLE: SVG figure (via the svg package / Inkscape)
+% =============================================================================
+% The svg package automatically converts SVG files to PDF+LaTeX via Inkscape.
+% Requires: Inkscape installed and -shell-escape enabled in the compiler.
+%
+% \begin{figure}[ht]
+%     \centering
+%     \includesvg[width=0.6\textwidth]{./pic/example}  % omit .svg extension
+%     \caption{An example SVG figure. Text in the SVG is rendered by LaTeX.}
+%     \label{fig:svg_example}
+% \end{figure}
+
+
+% =============================================================================
+% EXAMPLE: Standard image (PDF, PNG, JPG)
+% =============================================================================
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{./pic/example.pdf}
+%     \caption{A standard image figure.}
+%     \label{fig:image_example}
+% \end{figure}
+
+
+% =============================================================================
+% EXAMPLE: Table with booktabs
+% =============================================================================
+\begin{table}[ht]
+    \centering
+    \caption{Example results table using booktabs.}
+    \label{tab:example}
+    \begin{tabular}{lcc}
+        \toprule
+        Method & Accuracy & F1 Score \\
+        \midrule
+        Baseline & 0.75 & 0.72 \\
+        Proposed & 0.89 & 0.87 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

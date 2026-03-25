@@ -1,0 +1,75 @@
+    \begin{titlepage}
+
+	\thispagestyle{empty}
+	\newgeometry{left=0cm, right=0cm, top=0.6cm, bottom=0.4cm}
+
+	% FH Logo
+	\begin{flushright}
+		\hspace{-2cm}
+		\includegraphics[height=5.5cm]{./pic/FH-Aachen-r.pdf}
+	\end{flushright}
+
+
+	\vspace{-4cm}
+
+	% header
+	\centering \bfseries \Large
+	\textcolor{fhcyan}{Fachhochschule~Aachen}\\
+	\textcolor{fhdarkcyan}{University of Applied Sciences}\\
+	\normalsize
+
+	\vspace*{0.5cm}
+
+	{\normalsize\doublespacing \faculty\\
+	\program}
+
+
+	\vspace{2.0cm}
+
+	% title
+	\centering \begin{minipage}[t]{17cm}
+		\centering \bfseries \LARGE
+		\titleDocument
+		\medskip
+	\end{minipage}
+
+	\vfill
+
+	\begin{minipage}[t]{6cm}
+		\centering \large
+		\subjectDocument\\
+		\vspace*{0.5cm}
+		{\normalsize by}\\
+		\vspace*{0.5cm}
+		\authorDocument\\
+		{\normalsize Student Number: \studentNumber}
+	\end{minipage}
+
+	\vfill
+
+	\normalsize
+	First Supervisor:\\
+	\firstSupervisor\\
+	\vspace{0.75cm}
+	Second Supervisor:\\
+	\secondSupervisor
+
+    \vfill
+
+	\begin{minipage}[b]{6cm}
+			\centering
+			\locationDocument, \dateDocument\\
+	\end{minipage}
+
+	\vspace{0.5cm}
+
+	% Optional: second institution logo (bottom right)
+	\begin{flushright}
+		\begin{minipage}[t]{10cm}
+			\includegraphics[height=2.5cm]{./pic/rwth_hydrology.eps}
+		\end{minipage}
+	\end{flushright}
+
+	\restoregeometry
+
+\end{titlepage}

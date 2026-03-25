@@ -1,0 +1,39 @@
+\chapter*{Appendix}\label{appendix}
+\addcontentsline{toc}{chapter}{Appendix}
+\markboth{Appendix}{Appendix}
+\renewcommand{\thesection}{\Alph{section}}
+
+% Add appendix sections as needed.
+
+% =============================================================================
+% EXAMPLE: Source code listing with minted
+% =============================================================================
+% The minted package provides syntax highlighting via Pygments.
+% Requires: Pygments installed (pip install Pygments) and -shell-escape enabled.
+%
+% Supported languages: python, java, c, cpp, bash, json, latex, html, sql, ...
+% Full list: https://pygments.org/languages/
+
+\section{Example Source Code}\label{sec:example_code}
+
+\begin{listing}[ht]
+\begin{minted}{python}
+import numpy as np
+import matplotlib
+matplotlib.use('pgf')
+import matplotlib.pyplot as plt
+
+def plot_results(data: dict, output_path: str) -> None:
+    """Generate a PGF plot from experimental results."""
+    fig, ax = plt.subplots(figsize=(5, 3.5))
+    for label, values in data.items():
+        ax.plot(values, label=label)
+    ax.set_xlabel('Epoch')
+    ax.set_ylabel('Loss')
+    ax.legend()
+    fig.tight_layout()
+    fig.savefig(output_path)
+\end{minted}
+\caption{Example Python function that exports a matplotlib figure as PGF.}
+\label{lst:example_python}
+\end{listing}

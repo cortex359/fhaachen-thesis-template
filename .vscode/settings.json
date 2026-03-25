@@ -1,0 +1,55 @@
+{
+    "ltex.additionalRules.motherTongue": "de-DE",
+    "ltex.language": "auto",
+    "latex-workshop.latex.external.build.args": [
+        "-shell-escape"
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-shell-escape",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "latexmk_rconly",
+            "command": "latexmk",
+            "args": [
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        }
+    ],
+    "explorer.excludeGitIgnore": true,
+    "editor.wordWrap": "on",
+    "languageToolLinter.languageTool.level": "picky",
+    "languageToolLinter.languageTool.motherTongue": "de-DE",
+    "languageToolLinter.languageTool.preferredVariants": "de-DE,en-US"
+}
