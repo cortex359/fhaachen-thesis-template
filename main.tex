@@ -7,11 +7,11 @@
 %
 % LAYOUT NOTE:
 % This document uses a two-sided layout. To switch to one-sided, change
-% "twosided" to "onesided" below and remove "openright". You may also need
+% "twoside" to "oneside" below and remove "openright". You may also need
 % to adjust the geometry and header/footer settings.
 
 \documentclass[
-  twosided,
+  twoside,
   openright,       % chapters always start on a right-hand page
   12pt,
   a4paper,
@@ -37,32 +37,33 @@
 \newcommand{\firstSupervisor}{Prof. Dr. First Supervisor}
 \newcommand{\secondSupervisor}{Second Supervisor M.Sc.}
 \newcommand{\institution}{Lehr- und Forschungsgebiet}  % department/institute on affidavit
+
+% LANGUAGE SETTING
+% Set to "english" or "ngerman". This controls babel, hyperref pdflang,
+% siunitx locale, and the captions for Contents/References.
+\newcommand{\templateLanguage}{english}
 % =============================================================================
 
-% Paket für Umlaute (für Deutsch):
-\usepackage[utf8]{inputenc}       % Cross Platform
+% UTF-8 is the default since LaTeX 2018, no need for inputenc
 \usepackage[T1]{fontenc}
 
-\usepackage[english]{babel}
+\usepackage[\templateLanguage]{babel}
 
-% Verfeinerungen des Schriftbildes durch Grauwertausgleich etc.
+% date formatting
 \usepackage[datesep=., style=ddmmyyyy]{datetime2}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{makeidx}
 \usepackage{graphicx}
 \usepackage{svg}
 \usepackage{epstopdf}
 %\usepackage{kpfonts}
-\usepackage{blindtext}
 
-% Serifenschrift: Palatino anstelle der Standard-Schrift
+% serif font: Palatino instead of default
 \usepackage[sc]{mathpazo}
 %\usepackage{lmodern}
 
-% serifenlose Schrift: Helvetica anstelle der Standardschrift
-% Die Formeln auf den Folien werden dadurch besser lesbar.
+% sans-serif font: Helvetica instead of default
 \usepackage[scaled=.95]{helvet}
 
 %\usepackage{courier}
@@ -73,22 +74,16 @@
 nopatch=eqnum,
 tracking=true,
 kerning=true,
-spacing=true,  % @TODO: change to true
-final           % @TODO: change to final
-]{microtype} % sollte nach den Schriftpaketen geladen werden
+spacing=true,
+final
+]{microtype} % load after font packages
 
 %\usepackage[
-%  %left=2.0cm,
-%  %right=2.5cm,
-%  %top=2.5cm,
-%  %bottom=2.5cm,
-%  headheight=21.8pt, % benötigt von scrlayer-scrpage
+%  headheight=21.8pt, % required by scrlayer-scrpage
 %  footskip=21.8pt
 %]{geometry}
 \usepackage[pass]{geometry}
 \setlength{\footheight}{21.8pt}
-
-\newcommand\tab[1][1cm]{\hspace*{#1}}
 
 \title{\titleDocument}
 \author{\authorDocument}
@@ -96,25 +91,33 @@ final           % @TODO: change to final
 
 \setlength{\marginparsep}{0pt}
 \setlength{\marginparwidth}{0pt}
-\usepackage[onehalfspacing, nodisplayskipstretch]{setspace} % muss vor hyperref geladen werden, damit Footnotes nicht zur Titelseite verlinken
+\usepackage[onehalfspacing, nodisplayskipstretch]{setspace} % must be loaded before hyperref
 
 \usepackage[]{footmisc}
+
+% PDF metadata and hyperlink configuration
+\usepackage{xifthen}
 
 \usepackage[
 	pdftitle={\titleDocument},
 	pdfauthor={\authorDocument},
 	pdfsubject={\subjectDocument},
-	pdflang={en-US},
-	hidelinks, % Links nicht einrahmen
-	pdfdisplaydoctitle, % Titel statt Dokumentname in Titelleiste
-	pdfduplex=DuplexFlipLongEdge, % beidseitig drucken mit Spiegelung an langer Kante
-	pdfpagelayout=TwoPageRight, % Bildlauf in Zweiseitenansicht mit Titelblatt rechts
+	hidelinks,           % do not frame links
+	pdfdisplaydoctitle,  % show title instead of filename in viewer title bar
+	pdfduplex=DuplexFlipLongEdge,  % duplex printing, flip on long edge
+	pdfpagelayout=TwoPageRight,    % two-page view with title page on the right
   hyperindex=true,
   bookmarks=true,
 ]{hyperref}
 
+% set pdflang based on template language (must expand before passing to hyperref)
+\ifthenelse{\equal{\templateLanguage}{ngerman}}%
+  {\hypersetup{pdflang={de-DE}}}%
+  {\hypersetup{pdflang={en-US}}}
+
 \usepackage[automark,plainheadsepline,headsepline]{scrlayer-scrpage}
 
+% Colors
 \usepackage{xcolor}
 \definecolor{fhcyan}{rgb}{0, 0.69411, 0.6745}
 \definecolor{fhdarkcyan}{rgb}{0, 0.49411, 0.4745}
@@ -125,7 +128,7 @@ final           % @TODO: change to final
 % \definecolor{mycolor}{cmyk}{0.9, 1, 0, 0}
 
 \hypersetup{
-  naturalnames=true,  % mre 090528 beseitigt \ref Problem in Mik2.7
+  naturalnames=true,
   colorlinks=true,
   bookmarksnumbered=true,
   breaklinks,
@@ -133,11 +136,11 @@ final           % @TODO: change to final
   urlcolor=rwthblue0,
   linkcolor=rwthblue0,
   citecolor=rwthblue0,
-  linktoc=all, %set to all if you want both sections and subsections linked
+  linktoc=all, % link both sections and subsections in ToC
 }
 
 
-% Literatur
+% Bibliography
 \usepackage[
   backend=biber,
   style=numeric-comp,
@@ -148,69 +151,70 @@ final           % @TODO: change to final
   %── UNIFORM DATE OPTIONS ──
   date=iso,         % YYYY-MM-DD everywhere
   urldate=iso,      % also YYYY-MM-DD for "visited on"
-  alldates=iso,    % or "short", "long", "terse", "comp"
+  alldates=iso,     % or "short", "long", "terse", "comp"
 ]{biblatex}
 
-% TODO: weitere bib-Dateien können mit \addbibresource hinzugefügt werden, wobei bei Einträgen mit gleichem Key der Eintrag aus der ersten Datei genutzt wird
+% additional .bib files can be added with \addbibresource;
+% entries with duplicate keys use the first file's entry
 %\DefineBibliographyStrings{ngerman}{
-%	andothers = {et\addabbrvspace al\adddot} % et al. statt u. a.
+%	andothers = {et\addabbrvspace al\adddot} % "et al." instead of "u. a."
 %}
-\setcounter{biburlnumpenalty}{9000} % Zeilenumbrüche nach Zahlen in URLs erlauben
-\setcounter{biburlucpenalty}{9000} % Zeilenumbrüche nach Großbuchstaben in URLs erlauben
-\setcounter{biburllcpenalty}{9000} % Zeilenumbrüche nach Kleinbuchstaben in URLs erlauben
+\setcounter{biburlnumpenalty}{9000}  % allow line breaks after digits in URLs
+\setcounter{biburlucpenalty}{9000}   % allow line breaks after uppercase letters in URLs
+\setcounter{biburllcpenalty}{9000}   % allow line breaks after lowercase letters in URLs
 
 \clubpenalty = 10000
 \widowpenalty = 10000
 \displaywidowpenalty = 10000
 
-%  DOI Basis-URL
+% DOI base URL (set to sci-hub for paywalled entries)
 \newcommand{\opendoibase}{https://sci-hub.se/}
 
-% Feld "paywalled" explizit deklarieren
-% NOTE: Sollte nun automatisch aus der biblatex-dm.cfg geladen werden. Ansonsten die folgenden Zeilen wieder einkommentieren
+% "paywalled" field is declared in biblatex-dm.cfg.
+% Uncomment below if the cfg file is not picked up automatically:
 %\DeclareDatamodelFields[type=field, datatype=literal]{paywalled}
 %\DeclareDatamodelEntryfields{paywalled}
 
 
-% Konfiguration der im Literaturverzeichnis verwendeten Felder
+% Bibliography field configuration
 \DeclareSourcemap{
 	\maps[datatype=bibtex, overwrite]{
-    % mappe paywalled Attribut auf userb für sci-hub Verlinkung
+    % map paywalled attribute to userb for sci-hub linking
     \map{
       \step[fieldsource=paywalled, final]
       \step[fieldset=userb, origfieldval]
     }
-		% immer ungenutzte Felder entfernen
+		% always remove unused fields
 		\map{
 			\step[fieldset=abstract, null]
-			\step[fieldset=editor, null] % nur author, journal und publisher
+			\step[fieldset=editor, null]  % keep only author, journal, publisher
 			\step[fieldset=isbn, null]
-			\step[fieldset=month, null] % year ist ausreichend
-			\step[fieldset=number, null] % volume ist ausreichend
+			\step[fieldset=month, null]   % year is sufficient
+			\step[fieldset=number, null]  % volume is sufficient
 			\step[fieldset=pagetotal, null]
 		}
-		% wenn DOI vorhanden ist, nutze URL und eprint nicht
+		% if DOI exists, drop URL and eprint
 		\map{
 			\step[fieldsource=doi, final]
 			\step[fieldset=eprint, null]
 			\step[fieldset=url, null]
 			\step[fieldset=urldate, null]
 		}
-		% wenn DOI nicht vorhanden ist, aber eprint schon, nutze URL ebenfalls nicht
+		% if no DOI but eprint exists, also drop URL
 		\map{
 			\step[notfield=doi, final]
 			\step[fieldsource=eprint, final]
 			\step[fieldset=url, null]
 			\step[fieldset=urldate, null]
-		} % ist weder DOI noch eprint vorhanden, wird URL genutzt
-		% überflüssige Einträge für Konferenzpaper entfernen
+		} % if neither DOI nor eprint exists, URL is kept
+		% remove redundant fields for conference papers
 		\map{
 			\pertype{inproceedings}
 			\step[fieldset=venue, null]
 			\step[fieldset=eventdate, null]
 			\step[fieldset=eventtitle, null]
 		}
-		% überflüssige Einträge für Bücher entfernen
+		% remove redundant fields for books
 		\map{
 			\pertype{book}
 			\step[fieldset=url, null]
@@ -220,21 +224,19 @@ final           % @TODO: change to final
 
 \DeclareFieldFormat{doi}{%
   \iffieldundef{userb}
-  {DOI: \href{https://doi.org/#1}{\nolinkurl{#1}}} % Standard
-  {DOI: \href{\opendoibase #1}{\nolinkurl{#1}}} % Benutzerdefiniert
+  {DOI: \href{https://doi.org/#1}{\nolinkurl{#1}}}          % standard DOI link
+  {DOI: \href{\opendoibase #1}{\nolinkurl{#1}}}             % sci-hub link for paywalled entries
 }
 
-\addbibresource{references.bib} % Dokument mit Quellen
+\addbibresource{references.bib}
 
 
-\usepackage{listings}
 \usepackage{rotating}
 \usepackage{pdfpages}
 \usepackage[format=plain, labelfont=bf]{caption}
 \usepackage{subcaption}
-\parindent 0pt
 
-% Tabellen
+% Tables
 \usepackage{booktabs}
 \usepackage{threeparttable}
 \usepackage{longtable}
@@ -248,24 +250,22 @@ final           % @TODO: change to final
 \usepackage{import}
 \def\mathdefault#1{\displaystyle #1}
 
-% fonts
+% Heading fonts
 %\renewcommand{\familydefault}{\sfdefault}
-
 \setkomafont{chapter}{\sffamily \large}
 \setkomafont{section}{\sffamily \normalsize}
 \setkomafont{subsection}{\sffamily \normalsize}
 \setkomafont{subsubsection}{\sffamily \normalsize}
 
-%~ prevent overfull lines ~%
+% prevent overfull lines
 \setlength{\emergencystretch}{3em}
 \providecommand{\tightlist}{%
     \setlength{\itemsep}{0pt}%
     \setlength{\parskip}{0pt}}
 
-\setlength{\parindent}{0cm} %change indent of new paragraphs (if 0cm --> no indent)
+% parskip=half in documentclass already disables paragraph indentation
 
-% header and footer
-%
+% Header and footer
 \clearpairofpagestyles
 \ohead[\sffamily \bfseries \upshape \headmark]
       {\sffamily \bfseries \upshape \headmark}
@@ -278,64 +278,63 @@ final           % @TODO: change to final
 \ifoot[]{}
 \cfoot[]{}
 
-\automark[chapter]{chapter} % chapter for even, and chapter for odd pages when calling \headmark
+\automark[chapter]{chapter}
 
 \pagestyle{scrheadings}
 
 \renewcommand*{\chapterheadendvskip}{\vspace*{0.8\baselineskip}}
 
-% formulas
-%\usepackage{fleqn} % left
-%\setlength{\mathindent}{1.5cm} % indent
+% Formulas (uncomment for left-aligned equations)
+%\usepackage{fleqn}
+%\setlength{\mathindent}{1.5cm}
 
-% package for SI-units
+% SI units — change locale to DE for German formatting
 \usepackage[locale=US, group-separator={.}, group-minimum-digits=3, group-digits=integer]{siunitx}
-\DeclareSIUnit\litre{l} % l statt L für Liter
+\DeclareSIUnit\litre{l}
 
-%numbering of tables and figures (if you delete these, the figures and tables will be numbered according the chapter numbers)
+% Figure/table/equation numbering: continuous across chapters
+% (remove these to number per chapter, e.g. Figure 2.1, 2.2, ...)
 \usepackage{chngcntr}
 \counterwithout{figure}{chapter}
 \counterwithout{table}{chapter}
 \counterwithout{equation}{chapter}
 
-% tables
-\renewcommand{\arraystretch}{1.0} % increase (or decrease) line spacing in tables
-\setlength{\doublerulesep}{0.2mm} % spacing between doubled lines
+% Table spacing
+\renewcommand{\arraystretch}{1.0}
+\setlength{\doublerulesep}{0.2mm}
 \usepackage{tabularx}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 
-% Abstände um Chapter-Überschriften
+% Section heading spacing
 \RedeclareSectionCommand[
-  beforeskip=1.0ex,      % Abstand VOR der Überschrift
-  afterskip=0.4ex      % Abstand NACH der Überschrift
+  beforeskip=1.0ex,
+  afterskip=0.4ex
 ]{chapter}
 
 \RedeclareSectionCommand[
-  beforeskip=0.4ex,      % Abstand VOR der Überschrift
-  afterskip=0.4ex      % Abstand NACH der Überschrift
+  beforeskip=0.4ex,
+  afterskip=0.4ex
 ]{section}
 
-% Optional: Für subsection/subsubsection anpassen
 \RedeclareSectionCommand[
   beforeskip=1ex,
   afterskip=0.4ex
 ]{subsection}
 
-%\setlength{\RaggedRightRightskip}{0pt plus 0pt}  % Reduziert Hurenkinder
+
+% Language-dependent caption names
+\ifthenelse{\equal{\templateLanguage}{english}}{%
+  \renewcaptionname{english}{\contentsname}{\textbf{Contents}}
+  \renewcaptionname{english}{\bibname}{\textbf{References}}
+}{%
+  \renewcaptionname{ngerman}{\contentsname}{\textbf{Inhaltsverzeichnis}}
+  \renewcaptionname{ngerman}{\bibname}{\textbf{Literaturverzeichnis}}
+}
 
 
-% Renaming "table of contents" in "Contents"
-\renewcaptionname{english}{\contentsname}{\textbf{Contents}}
-%\renewcaptionname{ngerman}{\contentsname}{\textbf{Inhaltsverzeichnis}}
-
-% Renaming "Sources" in "References"
-\renewcaptionname{english}{\bibname}{\textbf{References}}
-%\renewcaptionname{ngerman}{\bibname}{\textbf{Literaturverzeichnis}}
-
-
-% Code Colors
+% Code highlighting colors
 \definecolor{codered}{rgb}{0.788, 0.102, 0.35}
 \definecolor{codegreen}{rgb}{0.137, 0.471, 0.255}
 \definecolor{codeblue}{rgb}{0, 0.333, 0.749}
@@ -345,11 +344,10 @@ final           % @TODO: change to final
 \definecolor{backcolor}{HTML}{f9f9f9}
 
 \usepackage{minted}
-\usepackage{lstautogobble}
 
 \setminted{
     frame=single,
-    numbersep=6pt, % default 12pt
+    numbersep=6pt,
     bgcolor=backcolor,
     fontsize=\footnotesize,
     breaklines=true,
@@ -362,14 +360,8 @@ final           % @TODO: change to final
 
 \usepackage[
 ]{tocbasic}
-% tocindentmanual,
-% tocflat,
-% tocbreaksstrict,
-% toctextentriesleft,
 
 \usepackage{csquotes}
-
-\usepackage[]{acronym}
 
 
 %%%%%%%%%%%% Document-specific settings
@@ -388,20 +380,20 @@ final           % @TODO: change to final
     \setstretch{1.5}
     \addtocontents{toc}{\linespread{1}}
 
-    % ============ Anfang =============
-    % Titelseite
-    \pagenumbering{gobble} %no page numbering
+    % ============ Front matter =============
+    % Title page
+    \pagenumbering{gobble} % no page numbering on title page
     \include{./doc/titlepage}
 
     \newgeometry{twoside, %bindingoffset=0.6cm,
-    headheight=1.5cm, % benötigt von scrlayer-scrpage
+    headheight=1.5cm, % required by scrlayer-scrpage
     footskip=1.5cm,
     inner=2.5cm, outer=2.5cm,
     top=3.5cm, bottom=3.5cm}
 
-    % Eidesstattliche Erklärung und Abstrakt
+    % Affidavit and abstract
     \begingroup
-      \pagenumbering{Roman} % page numbering is done with capital roman signs (I, II, III...)
+      \pagenumbering{Roman}
       \setcounter{page}{2}
       \include{./doc/affidavit}
 
@@ -409,19 +401,23 @@ final           % @TODO: change to final
       \include{./doc/abstract}
     \endgroup
 
-	  % Inhaltsverzeichnis
-	  \cleardoubleoddpage % Inhaltsverzeichnis rechts
+	  % Table of contents
+	  \cleardoubleoddpage
     \makeatletter
-    \renewcommand*{\@dotsep}{1} % set gap between dots
+    \renewcommand*{\@dotsep}{1} % gap between ToC dots
     \makeatother
     \tableofcontents
 
+    % Continuous page numbering: the main matter continues the roman page
+    % count as arabic numbers (e.g. front matter ends at VI → main matter
+    % starts at page 7). Remove the lastromanpage counter and uncomment
+    % \setcounter{page}{1} below to start the main matter at page 1 instead.
     \newcounter{lastromanpage}
     \setcounter{lastromanpage}{\value{page}}
-    % =========== Hauptteil ===========
+    % ============ Main matter ==============
     \clearpage
     \onehalfspacing
-    \pagenumbering{arabic} %page numbering is done with arabic numbers
+    \pagenumbering{arabic}
     %\setcounter{page}{1}
     \addtocounter{lastromanpage}{1}
     \setcounter{page}{\value{lastromanpage}}
@@ -434,15 +430,14 @@ final           % @TODO: change to final
     \include{./doc/06_discussion}
     \include{./doc/07_summary}
 
-    % ============= Ende ==============
-    %\cleardoubleoddpage % Literaturverzeichnis rechts
+    % ============ Back matter ==============
+    %\cleardoubleoddpage
     \printbibliography
 
-    %\bibliographystyle{unsrtdineng} % modified unsrtdin needs to be included as file in the main path (same level as the main document 000report.tex
+    %\bibliographystyle{unsrtdineng} % alternative: legacy BibTeX style (unsrtdineng.bst)
     %\bibliography{./bib/quellen}
-    %\addcontentsline{toc}{chapter}{\textbf{Literaturverzeichnis}}
 
-    %Appendix
+    % Appendix
     \clearpage
     \include{./doc/appendix}
 \end{document}

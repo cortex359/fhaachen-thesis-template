@@ -39,19 +39,19 @@
 		\centering \large
 		\subjectDocument\\
 		\vspace*{0.5cm}
-		{\normalsize by}\\
+		{\normalsize \ifthenelse{\equal{\templateLanguage}{ngerman}}{von}{by}}\\
 		\vspace*{0.5cm}
 		\authorDocument\\
-		{\normalsize Student Number: \studentNumber}
+		{\normalsize \ifthenelse{\equal{\templateLanguage}{ngerman}}{Matrikelnummer}{Student Number}: \studentNumber}
 	\end{minipage}
 
 	\vfill
 
 	\normalsize
-	First Supervisor:\\
+	\ifthenelse{\equal{\templateLanguage}{ngerman}}{Erstpr\"ufer}{First Supervisor}:\\
 	\firstSupervisor\\
 	\vspace{0.75cm}
-	Second Supervisor:\\
+	\ifthenelse{\equal{\templateLanguage}{ngerman}}{Zweitpr\"ufer}{Second Supervisor}:\\
 	\secondSupervisor
 
     \vfill
