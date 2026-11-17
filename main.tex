@@ -288,8 +288,15 @@ final
 %\usepackage{fleqn}
 %\setlength{\mathindent}{1.5cm}
 
-% SI units — change locale to DE for German formatting
-\usepackage[locale=US, group-separator={.}, group-minimum-digits=3, group-digits=integer]{siunitx}
+
+% SI units / English or German formatting
+\ifthenelse{\equal{\templateLanguage}{english}}{%
+  \usepackage[locale=US, group-separator={,}, group-minimum-digits=4, group-digits=integer]{siunitx}
+}{%
+  \usepackage[locale=DE, group-separator={.}, group-minimum-digits=4, group-digits=integer]{siunitx}
+  \usepackage{icomma} % suppress space after comma used as decimal separator
+}
+
 \DeclareSIUnit\litre{l}
 
 % Figure/table/equation numbering: continuous across chapters
@@ -369,10 +376,10 @@ final
 
 % Glossary / Acronyms
 \usepackage[acronym, nohypertypes={acronym}, nomain]{glossaries}
-% Define your acronyms here. Usage: \gls{api} for first use (expands), \gls{api} again (short form)
-\newacronym{api}{API}{Application Programming Interface}
-\newacronym{gui}{GUI}{Graphical User Interface}
-\newacronym{cpu}{CPU}{Central Processing Unit}
+% Define your acronyms here. Usage: \gls{llm} for first use (expands), \gls{llm} again (short form)
+\newacronym{llm}{LLM}{Large Language Model}
+\newacronym{nlp}{NLP}{Natural Language Processing}
+\newacronym{rag}{RAG}{Retrieval-Augmented Generation}
 
 %%%%%%%%%%%%
 
